@@ -1,0 +1,693 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    --background: 0.12 0.03 265;
+    --foreground: 0.95 0 0;
+    --card: 0.16 0.04 260;
+    --card-foreground: 0.92 0 0;
+    --popover: 0.14 0.03 260;
+    --popover-foreground: 0.92 0 0;
+    --primary: 0.82 0.18 85;
+    --primary-foreground: 0.1 0 0;
+    --secondary: 0.22 0.05 260;
+    --secondary-foreground: 0.9 0 0;
+    --muted: 0.2 0.04 260;
+    --muted-foreground: 0.62 0.03 240;
+    --accent: 0.72 0.2 220;
+    --accent-foreground: 0.05 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.82 0.18 85 / 18%;
+    --input: 1 1 1 / 8%;
+    --ring: 0.82 0.18 85;
+    --chart-1: 0.82 0.18 85;
+    --chart-2: 0.72 0.2 220;
+    --chart-3: 0.6 0.2 120;
+    --chart-4: 0.9 0.2 80;
+    --chart-5: 0.75 0.18 300;
+    --sidebar: 0.1 0.02 260;
+    --sidebar-foreground: 0.92 0 0;
+    --sidebar-primary: 0.82 0.18 85;
+    --sidebar-primary-foreground: 0.1 0 0;
+    --sidebar-accent: 0.18 0.04 260;
+    --sidebar-accent-foreground: 0.92 0 0;
+    --sidebar-border: 0.82 0.18 85 / 18%;
+    --sidebar-ring: 0.82 0.18 85;
+    --gold: #ffd700;
+    --gold-light: #ffa500;
+    --blue-electric: #00c6ff;
+    --blue-primary: #007bff;
+    --navy-dark: #0a0a1a;
+    --navy-mid: #0d1b3e;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 50%, #080814 100%);
+    background-attachment: fixed;
+    color: #e2e8f0;
+    font-family: "Space Grotesk", sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+}
+
+/* =============================================
+   FIX 1 — LUXURY GLASS CARD DEPTH
+   Raised from 0.04 → 0.07 opacity
+   Triple-layer shadow stack for premium elevation
+   Gold shimmer sweep on hover
+   ============================================= */
+.dark-glass-card {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  /* Layer 1: deep drop shadow for physical elevation */
+  /* Layer 2: warm gold ambient bloom */
+  /* Layer 3: bright inner top-edge highlight (the "glass rim") */
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), 0 6px 24px
+    rgba(255, 215, 0, 0.07), inset 0 1px 0 rgba(255, 215, 0, 0.14), inset 0 -1px
+    0 rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gold shimmer sweep on hover */
+.dark-glass-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 20%,
+    rgba(255, 215, 0, 0.06) 50%,
+    transparent 80%
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dark-glass-card:hover::before {
+  left: 160%;
+}
+
+.dark-glass-card:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+  box-shadow:
+    0 28px 72px rgba(0, 0, 0, 0.65),
+    0 10px 40px rgba(255, 215, 0, 0.13),
+    0 4px 16px rgba(0, 198, 255, 0.08),
+    inset 0 1px 0 rgba(255, 215, 0, 0.22),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  transform: translateY(-5px);
+}
+
+/* Ensure card children sit above the shimmer */
+.dark-glass-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =============================================
+   FIX 2 — SECTION TITLE TYPOGRAPHIC AUTHORITY
+   Uppercase + wide tracking + ✦ glyph prefix
+   Widened 80px divider with gold→blue gradient
+   ============================================= */
+.section-title-text {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.section-title-glyph {
+  color: #ffd700;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin-right: 8px;
+  vertical-align: middle;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.6));
+}
+
+.section-line {
+  width: 80px;
+  height: 3px;
+  /* Gold → electric blue → fade out = premium chapter divider */
+  background: linear-gradient(
+    90deg,
+    #ffd700 0%,
+    #ffa500 35%,
+    #00c6ff 65%,
+    transparent 100%
+  );
+  margin: 10px 0 0;
+  border-radius: 2px;
+  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.45));
+}
+
+/* ===== GOLD GRADIENT TEXT (utility) ===== */
+.gold-text {
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffd700 0%, #00c6ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== RAINBOW NAME ===== */
+.rainbow-text {
+  background: linear-gradient(
+    90deg,
+    #ffd700,
+    #ffa500,
+    #ff6b6b,
+    #00c6ff,
+    #ffd700,
+    #ffa500
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: colorMove 4s infinite linear;
+  background-size: 200% auto;
+}
+
+@keyframes colorMove {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+/* =============================================
+   FIX 3 — HERO AVATAR SPOTLIGHT HALO
+   Radial gold bloom behind the oval photo
+   Rendered via .avatar-halo wrapper in App.tsx
+   ============================================= */
+.avatar-spotlight {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The radial gold bloom that sits behind the photo */
+.avatar-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 215, 0, 0.28) 0%,
+    rgba(255, 165, 0, 0.12) 40%,
+    transparent 70%
+  );
+  filter: blur(24px);
+  border-radius: 50%;
+  animation: haloPulse 3.5s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.avatar-spotlight > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes haloPulse {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== VIP PILL BUTTONS ===== */
+.pill-btn {
+  display: block;
+  width: 85%;
+  margin: 12px auto;
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.pill-btn:hover {
+  transform: scale(1.04);
+  filter: brightness(1.12);
+}
+
+.pill-btn-blue {
+  background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+  color: #0a0a1a;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.35);
+}
+
+.pill-btn-blue:hover {
+  box-shadow: 0 8px 32px rgba(255, 215, 0, 0.55);
+}
+
+.pill-btn-red {
+  background: linear-gradient(135deg, #00c6ff 0%, #007bff 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 198, 255, 0.3);
+}
+
+.pill-btn-red:hover {
+  box-shadow: 0 8px 32px rgba(0, 198, 255, 0.5);
+}
+
+.pill-btn-green {
+  background: linear-gradient(135deg, #00e676 0%, #1aaf53 100%);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 230, 118, 0.3);
+}
+
+.pill-btn-green:hover {
+  box-shadow: 0 8px 32px rgba(0, 230, 118, 0.5);
+}
+
+/* ===== NEON BUTTON ===== */
+.neon-btn {
+  background: transparent;
+  color: #ffd700;
+  border: 1.5px solid #ffd700;
+  border-radius: 8px;
+  padding: 12px 32px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.neon-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 215, 0, 0.12),
+    transparent
+  );
+  transition: left 0.4s ease;
+}
+
+.neon-btn:hover::before {
+  left: 100%;
+}
+
+.neon-btn:hover {
+  background: rgba(255, 215, 0, 0.1);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 40px rgba(255, 215, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ===== HERO BACKGROUND ===== */
+.hero-bg {
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+}
+
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(255, 215, 0, 0.04) 1px,
+      transparent 1px
+    ), linear-gradient(90deg, rgba(255, 215, 0, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridMove 20s linear infinite;
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(255, 215, 0, 0.06) 0%,
+    transparent 65%
+  );
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+
+/* VIP Stars */
+.hero-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-stars::before,
+.hero-stars::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 215, 0, 0.7);
+  border-radius: 50%;
+  box-shadow:
+    120px 40px 0 rgba(255, 215, 0, 0.6),
+    320px 80px 0 rgba(0, 198, 255, 0.5),
+    80px 160px 0 rgba(255, 215, 0, 0.4),
+    500px 60px 0 rgba(255, 215, 0, 0.7),
+    700px 200px 0 rgba(0, 198, 255, 0.6),
+    900px 120px 0 rgba(255, 215, 0, 0.5),
+    200px 300px 0 rgba(0, 198, 255, 0.4),
+    650px 350px 0 rgba(255, 215, 0, 0.6),
+    1100px 180px 0 rgba(255, 165, 0, 0.5),
+    1300px 400px 0 rgba(0, 198, 255, 0.4),
+    400px 420px 0 rgba(255, 215, 0, 0.3),
+    1000px 460px 0 rgba(255, 165, 0, 0.5);
+  animation: starTwinkle 3s ease-in-out infinite alternate;
+}
+
+.hero-stars::after {
+  width: 1px;
+  height: 1px;
+  box-shadow:
+    60px 100px 0 rgba(255, 215, 0, 0.5),
+    260px 180px 0 rgba(0, 198, 255, 0.4),
+    460px 260px 0 rgba(255, 215, 0, 0.6),
+    760px 80px 0 rgba(255, 165, 0, 0.5),
+    860px 320px 0 rgba(0, 198, 255, 0.7),
+    1050px 240px 0 rgba(255, 215, 0, 0.4),
+    1200px 80px 0 rgba(0, 198, 255, 0.5),
+    150px 380px 0 rgba(255, 215, 0, 0.6),
+    550px 440px 0 rgba(255, 165, 0, 0.4);
+  animation-delay: -1.5s;
+}
+
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Gold/Blue Orbs */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orbFloat 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 215, 0, 0.18) 0%,
+    transparent 70%
+  );
+  top: -100px;
+  right: -100px;
+  animation-delay: 0s;
+}
+
+.hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 100, 220, 0.28) 0%,
+    transparent 70%
+  );
+  bottom: -80px;
+  left: -80px;
+  animation-delay: -4s;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(5, 5, 20, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.18);
+  transition: all 0.3s ease;
+}
+
+/* ===== VIP PROFILE PULSE ===== */
+@keyframes vipPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7), 0 0 35px rgba(255, 215, 0, 0.4),
+      0 0 70px rgba(255, 215, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.9), 0 0 55px
+      rgba(255, 215, 0, 0.55), 0 0 100px rgba(255, 165, 0, 0.25);
+  }
+}
+
+@keyframes vipFade {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes profileEnter {
+  0% {
+    transform: scale(0.5) rotate(-10deg);
+    opacity: 0;
+    filter: brightness(0.5);
+  }
+  50% {
+    transform: scale(1.05) rotate(5deg);
+    opacity: 0.7;
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+/* ===== SCROLL INDICATOR ===== */
+.scroll-indicator {
+  width: 30px;
+  height: 50px;
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 15px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.scroll-indicator::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: #ffd700;
+  border-radius: 2px;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+
+/* ===== SKILL BAR ===== */
+.skill-bar {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 8px auto;
+  width: 90%;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  width: 0;
+  transition: width 1.5s ease;
+  background: linear-gradient(90deg, #ffd700, #00c6ff);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+/* ===== TYPEWRITER ===== */
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: #ffd700;
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  animation: blink 0.8s step-end infinite;
+}
+
+/* ===== QR CODE FRAME ===== */
+.qr-frame {
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* ===== FIXED FLOATING BUTTONS ===== */
+.fixed-whatsapp {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+}
+
+.fixed-tiktok {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  z-index: 999;
+}
+
+.fixed-whatsapp img,
+.fixed-tiktok img {
+  width: 60px;
+  max-width: 15vw;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+}
+
+.fixed-whatsapp img:hover,
+.fixed-tiktok img:hover {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.7));
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes gridMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes orbFloat {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.05);
+  }
+}
+
+@keyframes scrollDot {
+  0%,
+  100% {
+    top: 8px;
+    opacity: 1;
+  }
+  50% {
+    top: 24px;
+    opacity: 0.3;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.8s ease forwards;
+}
